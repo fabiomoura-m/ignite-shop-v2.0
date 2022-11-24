@@ -9,14 +9,12 @@ import { stripe } from '../lib/stripe';
 import Stripe from 'stripe';
 import { GetStaticProps } from 'next';
 import { CartButton } from '../assets/components/CartButton';
+import { useCart } from '../hooks/useCart';
+import { Iproduct } from '../contexts/CartContext';
+import { MouseEvent } from 'react';
 
 interface HomeProps {
-    products: {
-        id: string;
-        name: string;
-        imageUrl: string;
-        price: string;
-    }[];
+    products: Iproduct[];
 }
 
 export default function Home({ products }: HomeProps) {
@@ -25,6 +23,17 @@ export default function Home({ products }: HomeProps) {
         skipSnaps: false,
         dragFree: true
     });
+
+    const { addToCart } = useCart();
+
+    function handleAddToCart(
+        e: MouseEvent<HTMLButtonElement>,
+        product: Iproduct
+    ) {
+        e.preventDefault();
+        addToCart(product);
+    }
+
     return (
         <>
             <Head>
@@ -59,6 +68,12 @@ export default function Home({ products }: HomeProps) {
                                                 <CartButton
                                                     color="green"
                                                     size="large"
+                                                    onClick={e =>
+                                                        handleAddToCart(
+                                                            e,
+                                                            product
+                                                        )
+                                                    }
                                                 />
                                             </footer>
                                         </Product>
