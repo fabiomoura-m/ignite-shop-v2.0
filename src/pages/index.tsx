@@ -24,7 +24,7 @@ export default function Home({ products }: HomeProps) {
         dragFree: true
     });
 
-    const { addToCart } = useCart();
+    const { addToCart, checkIfItemAlreadyExists } = useCart();
 
     function handleAddToCart(
         e: MouseEvent<HTMLButtonElement>,
@@ -68,6 +68,9 @@ export default function Home({ products }: HomeProps) {
                                                 <CartButton
                                                     color="green"
                                                     size="large"
+                                                    disabled={checkIfItemAlreadyExists(
+                                                        product.id
+                                                    )}
                                                     onClick={e =>
                                                         handleAddToCart(
                                                             e,
