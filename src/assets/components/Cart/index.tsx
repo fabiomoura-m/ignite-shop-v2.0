@@ -14,7 +14,7 @@ import Image from 'next/image';
 import { useCart } from '../../../hooks/useCart';
 
 export function Cart() {
-    const { cartItems } = useCart();
+    const { cartItems, removeCartItem } = useCart();
     const cartQuantity = cartItems.length;
 
     return (
@@ -47,7 +47,9 @@ export function Cart() {
                                     <p>{cartItem.name}</p>
                                     <strong>{cartItem.price}</strong>
                                     <button
-                                        onClick={() => console.log('remove')}
+                                        onClick={() =>
+                                            removeCartItem(cartItem.id)
+                                        }
                                     >
                                         Remover
                                     </button>
