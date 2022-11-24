@@ -14,8 +14,13 @@ import Image from 'next/image';
 import { useCart } from '../../../hooks/useCart';
 
 export function Cart() {
-    const { cartItems, removeCartItem } = useCart();
+    const { cartItems, removeCartItem, cartTotal } = useCart();
     const cartQuantity = cartItems.length;
+
+    const formattedCartTotal = new Intl.NumberFormat('pt-br', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(cartTotal);
 
     return (
         <Dialog.Root>
@@ -68,7 +73,7 @@ export function Cart() {
                             </div>
                             <div>
                                 <span>Valor total</span>
-                                <p>R$ 100,00</p>
+                                <p>{formattedCartTotal}</p>
                             </div>
                         </FinalizationDetails>
                         <button>Finalizar Compra</button>
